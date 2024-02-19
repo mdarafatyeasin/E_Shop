@@ -12,12 +12,24 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% url "add_category" %}">Add Category</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url "add_product" %}">Add Product</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url "deposit" %}">Deposit</a>
+          </li>
         </ul>
         <form class="d-flex" role="search">
           {% if user.is_authenticated %}
-            {% comment %} <a class="btn btn-outline-primary" href="{% url 'user_profile' %}"
+          <ul class ="me-auto mb-2 mb-lg-0 d-flex align-items-center" style="list-style-type: none;">
+            <li class="nav-item">
+              <h6 style = "margin: 10px;"><strong class = "text-success"> Balance: {{request.user.account.balance}} $</strong></h6>
+            </li>
+          </ul>
+            <a class="btn btn-outline-primary" href="#"
               >Profile</a
-            > {% endcomment %}
+            >
+            
             <a class="btn btn-outline-danger" href="{% url 'logout' %}"
               >Logout</a
             >
