@@ -1,0 +1,43 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<h1 class="text-center mt-3">User Profile</h1>
+<div class="profileCard d-flex align-center justify-content-center">
+  <div class="context text-center">
+    <img src="{% static "user_img.png" %}" class="card-img-top"
+    style="width:200px;" alt="profile picture">
+    <div class="card-body">
+      <h5 class="card-title">{{data}}</h5>
+      <p class="card-text">
+        Some quick example text to build on the card title and make up the bulk
+        of the card's content.
+      </p>
+      <a href="{% url "edit_profile" %}" class="btn btn-primary">Edit Profile</a>
+    </div>
+  </div>
+</div>
+
+<div>
+  
+  <div class="d-flex flex-wrap justify-content-center w-75 px-3 m-auto">
+    {% if products|length == 0 %}
+    <img class="w-50" src="{% static 'no_data.jpg' %}" alt="No data found" />
+    {% endif %} {% for product in products %}
+    <div class="col-sm-4 p-2 mb-3 mb-sm-0">
+      <div class="card">
+        <img
+          style="width: 200px"
+          src="{{product.picture.url}}"
+          class="card-img-top m-auto p-2"
+          alt="card img"
+        />
+        <div class="card-body">
+          <h1>{{product.id}}</h1>
+          <h5 class="card-title"><a href="{% url "car_detail" product.id %}">{{product.name}}</a></h5>
+          <h6 class="fw-light">Brand: {{product.brand_name}}</h6>
+          <p class="card-text">{{product.description | truncatewords:10}}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor%}
+  </div>
+</div>
+{% endblock %}
