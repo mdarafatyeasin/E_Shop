@@ -9,4 +9,4 @@ class userTransaction(models.Model):
     amount = models.DecimalField(decimal_places=2, max_digits = 12)
 
     def __str__(self):
-        return self.user
+        return self.transaction_type
