@@ -1,40 +1,57 @@
-{% extends 'base.html' %} {% block content %} {% load static %}
+{% extends 'base.html' %} 
+{% block content %} 
+{% load static %}
 
-{% comment %} wellcome page {% endcomment %}
-    <!-- filter section -->
-    {% for category in all_categories %}
-    <input type="radio" class="btn-check" name="options-base" id="{{category.categoryName}}" autocomplete="off">
-    <label class="btn btn-secondary" for="{{category.categoryName}}">
-        {% comment %} <a class ="text-white text-decoration-none" href ="{% url 'brand_wise_car' brand.slug %}">{{category.categoryName}}</a> {% endcomment %}
-        <a class ="text-white text-decoration-none" href ="">{{category.categoryName}}</a>
-    </label>
-    {% endfor %}
-    <h3>{{all_products|length}} book's found</h3>
-</div>
-<div class="home-section d-flex justify-content-center">
-  <!-- car section -->
-  <div class="d-flex flex-wrap justify-content-center w-75 px-3 m-auto">
-    {% if all_products|length == 0 %}
-    <img class="w-50" src="{% static 'no_data.jpg' %}" alt="No data found" />
-    {% endif %} {% for product in all_products %}
-    <div class="col-sm-4 p-2 mb-3 mb-sm-0">
-      <div class="card">
-        <img
-          style="width: 200px"
-          src="{{product.picture.url}}"
-          class="card-img-top m-auto p-2"
-          alt="card img"
-        />
-        <div class="card-body">
-          <h1>{{product.id}}</h1>
-          {% comment %} <h5 class="card-title"><a href="{% url "car_detail" cars.id %}">{{cars.name}}</a></h5> {% endcomment %}
-          <h5 class="card-title"><a href="">{{product.product_name}}</a></h5>
-          <h6 class="fw-light">Brand: {{product.category}}</h6>
-          <p class="card-text">{{product.description | truncatewords:10}}</p>
+<!-- Include Google Fonts -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+    /* Set fixed height for card images */
+    .card-img-top {
+        height: 200px; /* Adjust as needed */
+        object-fit: cover;
+    }
+</style>
+
+<div class="container mt-5">
+    <!-- Filter section -->
+    <div class="row justify-content-center mb-3">
+        <div class="col-md-8">
+            <div class="btn-group d-flex justify-content-center filter-section" role="group" aria-label="Category Filters">
+                {% for category in all_categories %}
+                <input type="radio" class="btn-check" name="options-base" id="{{ category.categoryName }}" autocomplete="off">
+                <label class="btn btn-secondary" for="{{ category.categoryName }}">
+                    <a class="text-white text-decoration-none" href="{% url 'brand_wise_products' category.slug %}">{{ category.categoryName }}</a>
+                </label>
+                {% endfor %}
+            </div>
         </div>
-      </div>
     </div>
-    {% endfor%}
-  </div>
+
+    <h3 style="font-family: 'Roboto', sans-serif;" class="text-center">{{ all_products|length }} books found</h3>
+</div>
+
+<div class="container">
+    <!-- Product cards section -->
+    {% if all_products|length == 0 %}
+    <div class="col-12 text-center">
+        <img style="width:400px;" src="{% static 'no_data.jpg' %}" class="img-fluid pb-5" alt="No data found" />
+    </div>
+    {% endif %}
+    <div class="row row-cols-1 row-cols-md-4 g-4 mb-5">
+        {% for product in all_products %}
+        <div class="col">
+            <div class="card h-100">
+                <img src="{{ product.picture.url }}" class="card-img-top" alt="Card image">
+                <div class="card-body">
+                    <h5 class="card-title" style="font-family: 'Roboto', sans-serif;"><a href="{% url 'product_details' product.id %}">{{ product.product_name }}</a></h5>
+                    <h6 class="card-subtitle mb-2 text-muted" style="font-family: 'Roboto', sans-serif;">Category: {{ product.category }}</h6>
+                    <p class="card-text" style="font-family: 'Roboto', sans-serif;">{{ product.description | truncatewords:10 }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}

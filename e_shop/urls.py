@@ -27,6 +27,8 @@ urlpatterns = [
     path('product_category/', include('product_category.urls')),
     path('products/', include('products.urls')),
     path('transaction/', include('transaction.urls')),
+    path('shop/', include('shop.urls')),
+    path('filter/<slug:category_slug>/', HomePage, name='brand_wise_products'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

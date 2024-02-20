@@ -1,47 +1,49 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid w-75">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+  <div class="container-fluid w-75">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url "home" %}">Home</a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url "add_category" %}">Add Category</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url "add_product" %}">Add Product</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url "deposit" %}">Deposit</a>
+        </li>
+        {% endif %}
+      </ul>
+      <form class="d-flex" role="search">
+        {% if user.is_authenticated %}
+        <ul class ="me-auto mb-2 mb-lg-0 d-flex align-items-center" style="list-style-type: none;">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url "home" %}">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url "add_category" %}">Add Category</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url "add_product" %}">Add Product</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url "deposit" %}">Deposit</a>
+            <h6 style = "margin: 10px;"><strong class = "text-success"> Balance: {{request.user.account.balance}} $</strong></h6>
           </li>
         </ul>
-        <form class="d-flex" role="search">
-          {% if user.is_authenticated %}
-          <ul class ="me-auto mb-2 mb-lg-0 d-flex align-items-center" style="list-style-type: none;">
-            <li class="nav-item">
-              <h6 style = "margin: 10px;"><strong class = "text-success"> Balance: {{request.user.account.balance}} $</strong></h6>
-            </li>
-          </ul>
-            <a class="btn btn-outline-primary" href="#"
-              >Profile</a
-            >
-            
-            <a class="btn btn-outline-danger" href="{% url 'logout' %}"
-              >Logout</a
-            >
-            {% else %}
-            <a class="btn btn-outline-info" href="{% url 'registration' %}"
-              >Sign Up</a
-            >
-            <a class="btn btn-outline-success" href="{% url 'login' %}"
-              >Login</a
-            >
-            {% endif %}
-        </form>
-      </div>
+          <a style="margin-right: 10px;" class="btn btn-outline-primary" href="{% url "user_profile" %}"
+            >Profile</a
+          >
+          
+          <a class="btn btn-outline-danger" href="{% url 'logout' %}"
+            >Logout</a
+          >
+          {% else %}
+          <a style="margin-right: 10px;" class="btn btn-outline-info" href="{% url 'registration' %}"
+            >Sign Up</a
+          >
+          <a class="btn btn-outline-success" href="{% url 'login' %}"
+            >Login</a
+          >
+          {% endif %}
+      </form>
     </div>
-  </nav>
+  </div>
+</nav>

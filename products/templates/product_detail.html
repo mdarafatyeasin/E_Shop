@@ -1,37 +1,52 @@
 {% extends "base.html" %}
-{% block content %} {% load crispy_forms_tags %}
-{% comment %} template {% endcomment %}
-<div class="card w-75 m-auto p-5">
-    <div class="row g-0">
-      <div class="col-md-4">
-        <img src="{{car.picture.url}}" class="img-fluid rounded-start" alt="...">
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h5 class="card-title">{{car.name}}</h5>
-          <p class="card-text">{{car.description}}</p>
-          <p class="card-text">Brand:<small class="text-body-secondary">{{car.brand_name.brand_name}}</small></p>
-          <p class="card-text">Quantity:<small class="text-body-secondary">{{car.quantity}}</small></p>
-          <p class="card-text">Price:<small class="text-body-secondary"><strong>{{car.price}}</strong></small></p>
-          {% if user.is_authenticated %}
-          <a class="btn btn-primary" href="{% url "by_now" car.id %}">Bye Now</a>
-          {% endif %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<!-- Include Google Fonts -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+<div class="container mt-5">
+    <div class="card w-75 mx-auto p-5">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="{{ product.picture.url }}" class="img-fluid rounded-start" alt="Product Image">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.product_name }}</h5>
+                    <p class="card-text">{{ product.description }}</p>
+                    <p class="card-text">Brand: <small class="text-muted">{{ product.brand_name }}</small></p>
+                    <p class="card-text">Quantity: <small class="text-muted">{{ product.quantity }}</small></p>
+                    <p class="card-text">Price: <strong class="text-primary">${{ product.price }}</strong></p>
+                    {% if user.is_authenticated %}
+                    <a class="btn btn-primary" href="{% url 'by_now' product.id %}">Buy Now</a>
+                    {% endif %}
+                </div>
+            </div>
         </div>
-      </div>
+        <hr>
+        <strong>Comments from users:</strong>
+        <div class="comments mt-3">
+            {% for comment in comments %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h6 class="card-title">{{ comment.name }}</h6>
+                    <p class="card-text">{{ comment.body }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
-    <hr>
-    <strong>Comments from users:</strong>
-    <div class="comments">
-      {% for comment in comments %}
-      <h6>{{comment.name}}</h6>
-      <p>{{comment.body}}</p>
-      {% endfor %}
-  </div>
-  </div>
-<div class="w-75 m-auto">
-    <form method="POST">
-        {% csrf_token %} {{comment_form | crispy }}
-        <button class="btn btn-warning">Submit</button>
-    </form>
+</div>
+
+<div class="container mt-4">
+    <div class="w-75 mx-auto">
+        <form method="POST">
+            {% csrf_token %}
+            {{ comment_form | crispy }}
+            <button class="btn btn-warning mt-3">Submit</button>
+        </form>
+    </div>
 </div>
 {% endblock %}

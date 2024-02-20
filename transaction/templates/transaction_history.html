@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center mt-3">Transaction History</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Transaction Type</th>
+                <th>Transaction Date</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in user_history %}
+            <tr>
+                <td>{{ transaction.id }}</td>
+                <td>{{ transaction.transaction_type }}</td>
+                <td>{{ transaction.transaction_date }}</td>
+                <td>{{ transaction.amount }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
