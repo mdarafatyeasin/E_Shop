@@ -31,6 +31,7 @@ SECRET_KEY = 'django-insecure-ln#_=itcu-npen(!in7%kdncdo!)lupv%$w+&$2*n+7@d75v!w
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = ['https://e-shop-85b5.onrender.com','https://*.127.0.0.1']
 
 
 # Application definition
